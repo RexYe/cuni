@@ -1,12 +1,14 @@
-function definePro(obj,key,val) {
+import qlextent from '../extent/qlextent.js';
+
+function definePro (obj,key,val) {
 	observer(val);
 	Object.defineProperty(obj,key, {
 		enumerable: true,
 		configurable: true,
 		get: function () {
-			reutrn val;
+			return val;
 		},
-		set : function (newVa) {
+		set: function (newVal) {
 			val = newVal;
 			console.log('key被监听');
 		}
@@ -18,11 +20,15 @@ function observer (obj) {
 		return ;
 	}
 	else{
-		Object.key(obj).forEach(function (key) {
+		Object.keys(obj).forEach(function (key) {
 			definePro(obj,key,obj[key]);
 		});
 	}
 }
+function Dep () {
+	this.subs = [];
+}
+
 var library = {
 	book1: {
 		name: ''
@@ -32,3 +38,4 @@ var library = {
 
 observer(library);
 library.book1.name = 'Vue权威指南';
+library.book2 = 'nobook';
