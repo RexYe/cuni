@@ -1,5 +1,5 @@
 import qlextent from '../extent/qlextent.js';
-
+// console.log(qlextent);
 function definePro (obj,key,val) {
 	observer(val);
 	Object.defineProperty(obj,key, {
@@ -39,3 +39,5 @@ var library = {
 observer(library);
 library.book1.name = 'Vue权威指南';
 library.book2 = 'nobook';
+
+export default observer
