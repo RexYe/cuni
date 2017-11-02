@@ -1,16 +1,27 @@
 import qlextent from '../extent/qlextent.js';
-// console.log(qlextent);
+
 function definePro (obj,key,val) {
 	observer(val);
+	var dep = new Dep();
 	Object.defineProperty(obj,key, {
 		enumerable: true,
 		configurable: true,
 		get: function () {
+			if () {
+				//增加订阅者
+				dep.addSubs();
+			}
 			return val;
 		},
 		set: function (newVal) {
-			val = newVal;
-			console.log('key被监听');
+			if(val === newVal) {
+				return ;
+			}
+			else{
+				val = newVal;
+				console.log('key被监听');
+				dep.notify();
+			}
 		}
 	});
 }
@@ -25,10 +36,20 @@ function observer (obj) {
 		});
 	}
 }
+//消息容器
 function Dep () {
-	this.subs = [];
+	//订阅者
+	this.subscribers = [];
 }
+qlextent.extendClass(Dep,{
+	//添加订阅者
+	addSubs: function (sub) {
+		this.subscribers.push(sub)
+	},
+	notify: function () {
 
+	}
+})
 var library = {
 	book1: {
 		name: ''
