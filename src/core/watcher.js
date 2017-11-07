@@ -1,12 +1,13 @@
 import qlextent from '../extent/qlextent.js';
 import Dep from './dep.js';
 
-function Watcher (vm, exp, cb ) {
+function Watcher (vm, exp, cb) {
 	this.cb = cb;
 	this.vm = vm;
 	this.exp = exp;
 	this.value = this.get();//将自己添加到订阅器
 }
+
 qlextent.extendClass(Watcher,{
 	update: function () {
 		this.run();
@@ -20,9 +21,9 @@ qlextent.extendClass(Watcher,{
 		}
 	},
 	get : function () {
-		Dep.target = this;
+		Dep.target = this; //缓存自己
 		var value = this.vm.data[this.exp]
-		Dep.target = null;
+		Dep.target = null; //释放自己
 		return value;
 	}
 });
